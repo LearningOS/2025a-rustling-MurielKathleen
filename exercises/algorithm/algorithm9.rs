@@ -1,8 +1,7 @@
 /*
-	heap
-	This question requires you to implement a binary heap function
+    heap
+    This question requires you to implement a binary heap function
 */
-// I AM NOT DONE
 
 use std::cmp::Ord;
 use std::default::Default;
@@ -23,7 +22,7 @@ where
     pub fn new(comparator: fn(&T, &T) -> bool) -> Self {
         Self {
             count: 0,
-            items: vec![T::default()],
+            items: vec![T::default()], // 索引0位置占位，方便计算
             comparator,
         }
     }
@@ -37,7 +36,12 @@ where
     }
 
     pub fn add(&mut self, value: T) {
-        //TODO
+        // 将新元素添加到末尾
+        self.items.push(value);
+        self.count += 1;
+        
+        // 上滤操作，恢复堆性质
+        self.sift_up(self.count);
     }
 
     fn parent_idx(&self, idx: usize) -> usize {
@@ -57,8 +61,47 @@ where
     }
 
     fn smallest_child_idx(&self, idx: usize) -> usize {
-        //TODO
-		0
+        let left_idx = self.left_child_idx(idx);
+        let right_idx = self.right_child_idx(idx);
+        
+        if right_idx > self.count {
+            // 只有左孩子
+            left_idx
+        } else {
+            // 比较左右孩子，返回更"小"的那个（根据比较器）
+            if (self.comparator)(&self.items[left_idx], &self.items[right_idx]) {
+                left_idx
+            } else {
+                right_idx
+            }
+        }
+    }
+    
+    // 上滤操作
+    fn sift_up(&mut self, mut idx: usize) {
+        while idx > 1 {
+            let parent_idx = self.parent_idx(idx);
+            if (self.comparator)(&self.items[idx], &self.items[parent_idx]) {
+                self.items.swap(idx, parent_idx);
+                idx = parent_idx;
+            } else {
+                break;
+            }
+        }
+    }
+    
+    // 下滤操作
+    fn sift_down(&mut self, mut idx: usize) {
+        while self.children_present(idx) {
+            let smallest_child_idx = self.smallest_child_idx(idx);
+            
+            if (self.comparator)(&self.items[smallest_child_idx], &self.items[idx]) {
+                self.items.swap(idx, smallest_child_idx);
+                idx = smallest_child_idx;
+            } else {
+                break;
+            }
+        }
     }
 }
 
@@ -84,8 +127,20 @@ where
     type Item = T;
 
     fn next(&mut self) -> Option<T> {
-        //TODO
-		None
+        if self.is_empty() {
+            return None;
+        }
+        
+        // 将堆顶元素与最后一个元素交换
+        let result = self.items.swap_remove(1);
+        self.count -= 1;
+        
+        // 如果还有元素，执行下滤操作恢复堆性质
+        if self.count > 0 {
+            self.sift_down(1);
+        }
+        
+        Some(result)
     }
 }
 
