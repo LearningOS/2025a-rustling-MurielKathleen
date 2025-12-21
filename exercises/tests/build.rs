@@ -10,15 +10,17 @@ fn main() {
         .duration_since(std::time::UNIX_EPOCH)
         .unwrap()
         .as_secs(); // What's the use of this timestamp here?
-    let your_command = format!(
-        "Your command here with {}, please checkout exercises/tests/build.rs",
-        timestamp
-    );
-    println!("cargo:{}", your_command);
+    
+    // 设置环境变量 TEST_FOO，值为时间戳字符串
+    // Cargo 构建脚本使用特殊格式的输出来与 Cargo 通信
+    println!("cargo:rustc-env=TEST_FOO={}", timestamp);
+    
+    // 重新运行构建脚本的条件：当这个文件改变时
+    println!("cargo:rerun-if-changed=build.rs");
 
     // In tests8, we should enable "pass" feature to make the
     // testcase return early. Fill in the command to tell
     // Cargo about that.
-    let your_command = "Your command here, please checkout exercises/tests/build.rs";
-    println!("cargo:{}", your_command);
+    // 启用 "pass" 特性
+    println!("cargo:rustc-cfg=feature=\"pass\"");
 }
