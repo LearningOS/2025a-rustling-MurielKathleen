@@ -6,12 +6,13 @@
 // Execute `rustlings hint tests2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 #[cfg(test)]
 mod tests {
     #[test]
     fn you_can_assert_eq() {
-        assert_eq!();
+        // 让测试通过：两个相等的值
+        // 让测试失败：两个不相等的值
+        assert_eq!(42, 42);  // 通过
+        // assert_eq!(42, 43);  // 失败
     }
 }
