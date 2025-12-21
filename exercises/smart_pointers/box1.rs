@@ -5,6 +5,7 @@
 // itself another value of the same type. To get around the issue, we can use a
 // `Box` - a smart pointer used to store data on the heap, which also allows us
 // to wrap a recursive type.
+// Step 1: use a `Box` in the enum definition to make the code compile
 //
 // The recursive type we're implementing in this exercise is the `cons list` - a
 // data structure frequently found in functional programming languages. Each
