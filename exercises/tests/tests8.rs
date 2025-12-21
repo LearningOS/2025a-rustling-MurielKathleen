@@ -7,8 +7,6 @@
 // Execute `rustlings hint tests8` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 fn main() {}
 
 #[cfg(test)]
@@ -17,9 +15,11 @@ mod tests {
 
     #[test]
     fn test_success() {
+        // 如果启用了 "pass" 特性，直接返回（测试通过）
         #[cfg(feature = "pass")]
         return;
 
+        // 如果没有启用 "pass" 特性，panic（测试失败）
         panic!("no cfg set");
     }
 }
