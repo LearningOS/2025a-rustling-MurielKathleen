@@ -19,15 +19,21 @@
 // Execute `rustlings hint errors2` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 use std::num::ParseIntError;
 
 pub fn total_cost(item_quantity: &str) -> Result<i32, ParseIntError> {
     let processing_fee = 1;
     let cost_per_item = 5;
-    let qty = item_quantity.parse::<i32>();
-
+    
+    // 方法1：使用 match 处理 Result
+    let qty = match item_quantity.parse::<i32>() {
+        Ok(n) => n,
+        Err(e) => return Err(e),  // 解析失败时立即返回错误
+    };
+    
+    // 方法2（更简洁）：使用 ? 操作符
+    // let qty = item_quantity.parse::<i32>()?;
+    
     Ok(qty * cost_per_item + processing_fee)
 }
 
