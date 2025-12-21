@@ -3,8 +3,7 @@
 // Execute `rustlings hint macros1` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
+// 方法1：将宏定义放在 main 函数之前
 macro_rules! my_macro {
     () => {
         println!("Check out my macro!");
