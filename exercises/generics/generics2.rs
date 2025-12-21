@@ -31,4 +31,5 @@ mod tests {
     fn store_str_in_wrapper() {
         assert_eq!(Wrapper::new("Foo").value, "Foo");
     }
+    
 }
