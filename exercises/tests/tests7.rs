@@ -34,8 +34,6 @@
 // Execute `rustlings hint tests7` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 fn main() {}
 
 #[cfg(test)]
@@ -44,12 +42,19 @@ mod tests {
 
     #[test]
     fn test_success() {
+        // 获取当前时间戳
         let timestamp = std::time::SystemTime::now()
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap()
             .as_secs();
+        
+        // 从编译时环境变量获取 TEST_FOO 的值
         let s = std::env::var("TEST_FOO").unwrap();
         let e: u64 = s.parse().unwrap();
+        
+        // 验证当前时间在 [e, e+10) 范围内
+        // 因为 build.rs 在编译时设置的时间戳，测试在运行时执行
+        // 两者之间的时间差应该很小
         assert!(timestamp >= e && timestamp < e + 10);
     }
 }
